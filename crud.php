@@ -1,102 +1,64 @@
 <?php
-// Consolidated PHP script for CRUD operations
+// Database connection
+$servername = "localhost";
+$username = "username";
+$password = "password";
+$dbname = "dbname";
 
-// Function to establish a connection to the MySQL database
-function connectToDatabase() {
-    $host = 'bukd4iomk13wlvwir9ps-mysql.services.clever-cloud.com'; // MySQL server hostname
-    $username = 'ud5eesb5lq8h0wcb'; // MySQL username
-    $password = 'x9VTgtHA6T2HvbBbAJJU'; // MySQL password
-    $database = 'bukd4iomk13wlvwir9ps'; // MySQL database name
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-    $mysqli = new mysqli($host, $username, $password, $database);
-    if ($mysqli->connect_error) {
-        die("Connection failed: " . $mysqli->connect_error);
-    }
-    return $mysqli;
+// Check connection
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
 }
 
-// Function to add a new mission to the database
-function addMission($missionType) {
-    $mysqli = connectToDatabase();
-
-    $stmt = $mysqli->prepare("INSERT INTO Mission (missionType) VALUES (?)");
-    $stmt->bind_param("s", $missionType);
-
-    if ($stmt->execute() === TRUE) {
-        return true;
-    } else {
-        return false;
-    }
-
-    $stmt->close();
-    $mysqli->close();
-}
-
-// Function to fetch existing missions from the database
-function fetchMissions() {
-    $mysqli = connectToDatabase();
-
-    $sql = "SELECT * FROM Mission";
-    $result = $mysqli->query($sql);
+// Handle CRUD operations for HouseCall table
+if ($_SERVER["REQUEST_METHOD"] == "GET") {
+  if ($_GET["action"] == "readHouseCall") {
+    $sql = "SELECT * FROM HouseCall";
+    $result = $conn->query($sql);
+    $houseCalls = array();
 
     if ($result->num_rows > 0) {
-        $missions = [];
-        while ($row = $result->fetch_assoc()) {
-            $missions[] = $row;
-        }
-        return $missions;
-    } else {
-        return [];
+      while($row = $result->fetch_assoc()) {
+        $houseCalls[] = $row;
+      }
     }
 
-    $mysqli->close();
+    header('Content-Type: application/json');
+    echo json_encode($houseCalls);
+  }
 }
 
-// Function to delete a mission from the database
-function deleteMission($missionID) {
-    $mysqli = connectToDatabase();
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  $action = $_POST["action"];
 
-    $stmt = $mysqli->prepare("DELETE FROM Mission WHERE missionID = ?");
-    $stmt->bind_param("i", $missionID);
+  if ($action == "addHouseCall") {
+    $dateOfRun = $_POST["dateOfRun"];
+    $vehicleID = $_POST["vehicleID"];
+    $missionID = $_POST["missionID"];
+    $destinationLocations = $_POST["destinationLocations"];
+    $sql = "INSERT INTO HouseCall (dateOfRun, vehicleID, missionID, destinationLocations) 
+            VALUES ('$dateOfRun', '$vehicleID', '$missionID', '$destinationLocations')";
 
-    if ($stmt->execute() === TRUE) {
-        return true;
+    if ($conn->query($sql) === TRUE) {
+      echo "House call added successfully";
     } else {
-        return false;
+      echo "Error: " . $sql . "<br>" . $conn->error;
     }
+  }
 
-    $stmt->close();
-    $mysqli->close();
+  if ($action == "deleteHouseCall") {
+    $houseCallID = $_POST["houseCallID"];
+    $sql = "DELETE FROM HouseCall WHERE houseCallID = $houseCallID";
+
+    if ($conn->query($sql) === TRUE) {
+      echo "House call deleted successfully";
+    } else {
+      echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+  }
 }
 
-// Handle requests from JavaScript
-$action = $_POST['action'] ?? $_GET['action'] ?? '';
-
-switch ($action) {
-    case 'add':
-        $missionType = $_POST['missionType'] ?? '';
-        if (!empty($missionType)) {
-            echo addMission($missionType) ? 'Mission added successfully' : 'Failed to add mission';
-        } else {
-            echo 'Mission type cannot be empty';
-        }
-        break;
-    
-    case 'fetch':
-        $missions = fetchMissions();
-        echo json_encode($missions);
-        break;
-
-    case 'delete':
-        $missionID = $_GET['missionID'] ?? '';
-        if (!empty($missionID)) {
-            echo deleteMission($missionID) ? 'Mission deleted successfully' : 'Failed to delete mission';
-        } else {
-            echo 'Mission ID cannot be empty';
-        }
-        break;
-
-    default:
-        echo 'Invalid action';
-}
+$conn->close();
 ?>

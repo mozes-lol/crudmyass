@@ -1,70 +1,100 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Fetch existing missions when the page loads
-    fetchMissions();
-
-    // Add event listener for form submission
-    document.getElementById('addMissionForm').addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent default form submission
-        const missionType = document.getElementById('missionType').value;
-
-        // Validate input
-        if (missionType.trim() === '') {
-            alert('Mission Type cannot be empty.');
-            return;
-        }
-
-        // Send data to server
-        addMission(missionType);
+    loadMissions();
+    loadGroundAmbulances();
+    loadVehicles();
+    loadAirAmbulances();
+    loadHouseCalls();
+  
+    document.getElementById('mission-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      addMission();
     });
-});
-
-// Function to fetch existing missions from the server
-function fetchMissions() {
-    fetch('crud.php?action=fetch')
-    .then(response => response.json())
-    .then(data => {
-        const missionsTableBody = document.getElementById('missionsTableBody');
-        missionsTableBody.innerHTML = ''; // Clear existing rows
-        data.forEach(mission => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${mission.missionID}</td>
-                <td>${mission.missionType}</td>
-                <td>
-                    <button onclick="deleteMission(${mission.missionID})">Delete</button>
-                </td>
-            `;
-            missionsTableBody.appendChild(row);
+  
+    document.getElementById('ground-ambulance-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      addGroundAmbulance();
+    });
+  
+    document.getElementById('vehicle-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      addVehicle();
+    });
+  
+    document.getElementById('air-ambulance-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      addAirAmbulance();
+    });
+  
+    document.getElementById('house-call-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      addHouseCall();
+    });
+  });
+  
+  function loadHouseCalls() {
+    fetch('backend.php?action=readHouseCall')
+      .then(response => response.json())
+      .then(data => {
+        const houseCallList = document.getElementById('house-call-list');
+        houseCallList.innerHTML = '';
+  
+        data.forEach(houseCall => {
+          const houseCallItem = document.createElement('div');
+          houseCallItem.innerHTML = `
+            <p><strong>Date of Run:</strong> ${houseCall.dateOfRun}</p>
+            <p><strong>Vehicle ID:</strong> ${houseCall.vehicleID}</p>
+            <p><strong>Mission ID:</strong> ${houseCall.missionID}</p>
+            <p><strong>Destination Locations:</strong> ${houseCall.destinationLocations}</p>
+            <button onclick="deleteHouseCall(${houseCall.houseCallID})">Delete</button>
+          `;
+          houseCallList.appendChild(houseCallItem);
         });
+      });
+  }
+  
+  function addHouseCall() {
+    const dateOfRun = document.getElementById('dateOfRunHC').value;
+    const vehicleID = document.getElementById('vehicleIDHC').value;
+    const missionID = document.getElementById('missionIDHC').value;
+    const destinationLocations = document.getElementById('destinationLocations').value;
+  
+    fetch('backend.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        action: 'addHouseCall',
+        dateOfRun: dateOfRun,
+        vehicleID: vehicleID,
+        missionID: missionID,
+        destinationLocations: destinationLocations,
+      }),
     })
-    .catch(error => console.error('Error fetching missions:', error));
-}
-
-// Function to add a new mission
-function addMission(missionType) {
-    const formData = new FormData();
-    formData.append('action', 'add');
-    formData.append('missionType', missionType);
-
-    fetch('crud.php', {
+    .then(response => response.text())
+    .then(data => {
+      alert(data);
+      loadHouseCalls();
+    });
+  }
+  
+  function deleteHouseCall(houseCallID) {
+    if (confirm('Are you sure you want to delete this house call?')) {
+      fetch('backend.php', {
         method: 'POST',
-        body: formData
-    })
-    .then(response => response.text())
-    .then(message => {
-        alert(message);
-        fetchMissions(); // Refresh mission list
-    })
-    .catch(error => console.error('Error adding mission:', error));
-}
-
-// Function to delete a mission
-function deleteMission(missionID) {
-    fetch(`crud.php?action=delete&missionID=${missionID}`)
-    .then(response => response.text())
-    .then(message => {
-        alert(message);
-        fetchMissions(); // Refresh mission list
-    })
-    .catch(error => console.error('Error deleting mission:', error));
-}
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          action: 'deleteHouseCall',
+          houseCallID: houseCallID,
+        }),
+      })
+      .then(response => response.text())
+      .then(data => {
+        alert(data);
+        loadHouseCalls();
+      });
+    }
+  }
+  
