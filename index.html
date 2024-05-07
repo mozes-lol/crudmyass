@@ -81,24 +81,44 @@ table {
         <tr>
             <th>Mission ID</th>
             <th>Mission Type</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td></td>
-            <td></td>
-        </tr>
+            <td>1</td>
+            <td>Advanced Care</td>
+            <td>
+              <button style="background-color: yellow; color: black; padding: 10px 20px; border: none; margin-right: 10px;">Edit</button>
+              <button style="background-color: red; color: white; padding: 10px 20px; border: none;">Delete</button>
+            </td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Community</td>
+            <td>
+              <button style="background-color: yellow; color: black; padding: 10px 20px; border: none; margin-right: 10px;">Edit</button>
+              <button style="background-color: red; color: white; padding: 10px 20px; border: none;">Delete</button>
+            </td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Critical Care</td>
+            <td>
+              <button style="background-color: yellow; color: black; padding: 10px 20px; border: none; margin-right: 10px;">Edit</button>
+              <button style="background-color: red; color: white; padding: 10px 20px; border: none;">Delete</button>
+          </tr>
     </tbody>
   </table>
   </div>
   
   <div class="databaseTable">
     <form id="ground-ambulance-form">
-      <label for="dateOfRunGA">Date of Run (Ground Ambulance):</label>
+      <label for="dateOfRunGA">Date of Run:</label>
       <input type="date" id="dateOfRunGA" name="dateOfRunGA" required>
-      <label for="vehicleIDGA">Vehicle ID (Ground Ambulance):</label>
+      <label for="vehicleIDGA">Vehicle ID (Foreign Key from table "Vehicle"):</label>
       <input type="number" id="vehicleIDGA" name="vehicleIDGA" required>
-      <label for="missionIDGA">Mission ID (Ground Ambulance):</label>
+      <label for="missionIDGA">Mission ID (Foreign Key from table "Mission"):</label>
       <input type="number" id="missionIDGA" name="missionIDGA" required>
       <label for="pickupLocation">Pickup Location:</label>
       <input type="text" id="pickupLocation" name="pickupLocation" required>
@@ -156,11 +176,11 @@ table {
 
   <div class="databaseTable">
     <form id="air-ambulance-form">
-      <label for="dateOfRunAA">Date of Run (Air Ambulance):</label>
+      <label for="dateOfRunAA">Date of Run:</label>
       <input type="date" id="dateOfRunAA" name="dateOfRunAA" required>
-      <label for="vehicleIDAA">Vehicle ID (Air Ambulance):</label>
+      <label for="vehicleIDAA">Vehicle ID (Foreign Key from table "Vehicle"):</label>
       <input type="number" id="vehicleIDAA" name="vehicleIDAA" required>
-      <label for="missionIDAA">Mission ID (Air Ambulance):</label>
+      <label for="missionIDAA">Mission ID (Foreign Key from table "Mission"):</label>
       <input type="number" id="missionIDAA" name="missionIDAA" required>
       <button type="submit" id="add-air-ambulance-btn">Submit Air Ambulance</button>
     </form>
@@ -189,11 +209,11 @@ table {
 
   <div class="databaseTable">
     <form id="house-call-form">
-      <label for="dateOfRunHC">Date of Run (House Call):</label>
+      <label for="dateOfRunHC">Date of Run:</label>
       <input type="date" id="dateOfRunHC" name="dateOfRunHC" required>
-      <label for="vehicleIDHC">Vehicle ID (House Call):</label>
+      <label for="vehicleIDHC">Vehicle ID (Foreign Key from table "Vehicle"):</label>
       <input type="number" id="vehicleIDHC" name="vehicleIDHC" required>
-      <label for="missionIDHC">Mission ID (House Call):</label>
+      <label for="missionIDHC">Mission ID (Foreign Key from table "Mission"):</label>
       <input type="number" id="missionIDHC" name="missionIDHC" required>
       <label for="destinationLocations">Destination Locations:</label>
       <input type="text" id="destinationLocations" name="destinationLocations" required>
