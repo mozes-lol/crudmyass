@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CRUD Mission, GroundAmbulance, Vehicle, AirAmbulance & HouseCall</title>
+<title>Ambulance Manager: CRUD Program</title>
 <style>
 body {
   font-family: Arial, sans-serif;
@@ -46,65 +46,185 @@ button {
 button:hover {
   background-color: #45a049;
 }
+
+table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+.databaseTable{
+  margin-bottom: 50px;
+}
 </style>
 </head>
 <body>
 
 <div class="container">
-  <h1>CRUD Mission, GroundAmbulance, Vehicle, AirAmbulance & HouseCall</h1>
-  <form id="mission-form">
+  <h1>Ambulance Manager: CRUD Program</h1>
+  
+  <div class="databaseTable">
+    <form id="mission-form">
     <label for="missionType">Mission Type:</label>
     <input type="text" id="missionType" name="missionType" required>
-    <button type="submit" id="add-mission-btn">Add Mission</button>
+    <button type="submit" id="add-mission-btn">Submit Mission</button>
   </form>
 
-  <form id="ground-ambulance-form">
-    <label for="dateOfRunGA">Date of Run (Ground Ambulance):</label>
-    <input type="date" id="dateOfRunGA" name="dateOfRunGA" required>
-    <label for="vehicleIDGA">Vehicle ID (Ground Ambulance):</label>
-    <input type="number" id="vehicleIDGA" name="vehicleIDGA" required>
-    <label for="missionIDGA">Mission ID (Ground Ambulance):</label>
-    <input type="number" id="missionIDGA" name="missionIDGA" required>
-    <label for="pickupLocation">Pickup Location:</label>
-    <input type="text" id="pickupLocation" name="pickupLocation" required>
-    <label for="dropoffLocation">Dropoff Location:</label>
-    <input type="text" id="dropoffLocation" name="dropoffLocation" required>
-    <button type="submit" id="add-ground-ambulance-btn">Add Ground Ambulance</button>
-  </form>
+  <table>
+    <thead>
+        <tr>
+            <th>Mission ID</th>
+            <th>Mission Type</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td></td>
+            <td></td>
+        </tr>
+    </tbody>
+  </table>
+  </div>
+  
+  <div class="databaseTable">
+    <form id="ground-ambulance-form">
+      <label for="dateOfRunGA">Date of Run (Ground Ambulance):</label>
+      <input type="date" id="dateOfRunGA" name="dateOfRunGA" required>
+      <label for="vehicleIDGA">Vehicle ID (Ground Ambulance):</label>
+      <input type="number" id="vehicleIDGA" name="vehicleIDGA" required>
+      <label for="missionIDGA">Mission ID (Ground Ambulance):</label>
+      <input type="number" id="missionIDGA" name="missionIDGA" required>
+      <label for="pickupLocation">Pickup Location:</label>
+      <input type="text" id="pickupLocation" name="pickupLocation" required>
+      <label for="dropoffLocation">Dropoff Location:</label>
+      <input type="text" id="dropoffLocation" name="dropoffLocation" required>
+      <button type="submit" id="add-ground-ambulance-btn">Submit Ground Ambulance</button>
+    </form>
 
-  <form id="vehicle-form">
-    <label for="vehicleType">Vehicle Type:</label>
-    <input type="text" id="vehicleType" name="vehicleType" required>
-    <button type="submit" id="add-vehicle-btn">Add Vehicle</button>
-  </form>
+    <table>
+      <thead>
+          <tr>
+              <th>Ground Ambulance ID</th>
+              <th>Date of Run</th>
+              <th>Vehicle ID</th>
+              <th>Mission ID</th>
+              <th>Pickup Location</th>
+              <th>Drop-Off Location</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+          </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <div class="databaseTable">
+    <form id="vehicle-form">
+      <label for="vehicleType">Vehicle Type:</label>
+      <input type="text" id="vehicleType" name="vehicleType" required>
+      <button type="submit" id="add-vehicle-btn">Submit Vehicle</button>
+    </form>
 
-  <form id="air-ambulance-form">
-    <label for="dateOfRunAA">Date of Run (Air Ambulance):</label>
-    <input type="date" id="dateOfRunAA" name="dateOfRunAA" required>
-    <label for="vehicleIDAA">Vehicle ID (Air Ambulance):</label>
-    <input type="number" id="vehicleIDAA" name="vehicleIDAA" required>
-    <label for="missionIDAA">Mission ID (Air Ambulance):</label>
-    <input type="number" id="missionIDAA" name="missionIDAA" required>
-    <button type="submit" id="add-air-ambulance-btn">Add Air Ambulance</button>
-  </form>
+    <table>
+      <thead>
+          <tr>
+              <th>Vehicle ID</th>
+              <th>Vehicle Type</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr>
+              <td></td>
+              <td></td>
+          </tr>
+      </tbody>
+    </table>    
+  </div>
 
-  <form id="house-call-form">
-    <label for="dateOfRunHC">Date of Run (House Call):</label>
-    <input type="date" id="dateOfRunHC" name="dateOfRunHC" required>
-    <label for="vehicleIDHC">Vehicle ID (House Call):</label>
-    <input type="number" id="vehicleIDHC" name="vehicleIDHC" required>
-    <label for="missionIDHC">Mission ID (House Call):</label>
-    <input type="number" id="missionIDHC" name="missionIDHC" required>
-    <label for="destinationLocations">Destination Locations:</label>
-    <input type="text" id="destinationLocations" name="destinationLocations" required>
-    <button type="submit" id="add-house-call-btn">Add House Call</button>
-  </form>
+  <div class="databaseTable">
+    <form id="air-ambulance-form">
+      <label for="dateOfRunAA">Date of Run (Air Ambulance):</label>
+      <input type="date" id="dateOfRunAA" name="dateOfRunAA" required>
+      <label for="vehicleIDAA">Vehicle ID (Air Ambulance):</label>
+      <input type="number" id="vehicleIDAA" name="vehicleIDAA" required>
+      <label for="missionIDAA">Mission ID (Air Ambulance):</label>
+      <input type="number" id="missionIDAA" name="missionIDAA" required>
+      <button type="submit" id="add-air-ambulance-btn">Submit Air Ambulance</button>
+    </form>
 
+    <table>
+      <thead>
+          <tr>
+              <th>Air Ambulance</th>
+              <th>Date of Run</th>
+              <th>Vehicle ID</th>
+              <th>Mission ID</th>
+              <th>Destination Location</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+          </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="databaseTable">
+    <form id="house-call-form">
+      <label for="dateOfRunHC">Date of Run (House Call):</label>
+      <input type="date" id="dateOfRunHC" name="dateOfRunHC" required>
+      <label for="vehicleIDHC">Vehicle ID (House Call):</label>
+      <input type="number" id="vehicleIDHC" name="vehicleIDHC" required>
+      <label for="missionIDHC">Mission ID (House Call):</label>
+      <input type="number" id="missionIDHC" name="missionIDHC" required>
+      <label for="destinationLocations">Destination Locations:</label>
+      <input type="text" id="destinationLocations" name="destinationLocations" required>
+      <button type="submit" id="add-house-call-btn">Submit House Call</button>
+    </form>
+
+    <table>
+      <thead>
+          <tr>
+              <th>House Call ID</th>
+              <th>Date of Run</th>
+              <th>Vehicle ID</th>
+              <th>Mission ID</th>
+              <th>Mission ID</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+          </tr>
+      </tbody>
+    </table>
+  </div>
+<!-- 
   <div id="mission-list"></div>
   <div id="ground-ambulance-list"></div>
   <div id="vehicle-list"></div>
   <div id="air-ambulance-list"></div>
-  <div id="house-call-list"></div>
+  <div id="house-call-list"></div> -->
 </div>
 
 <script src="scripts.js"></script>

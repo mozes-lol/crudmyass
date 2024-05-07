@@ -1,9 +1,10 @@
 <?php
 // Database connection
-$servername = "localhost";
-$username = "username";
-$password = "password";
-$dbname = "dbname";
+$host = 'bukd4iomk13wlvwir9ps-mysql.services.clever-cloud.com'; // MySQL server hostname
+$username = 'ud5eesb5lq8h0wcb'; // MySQL username
+$password = 'x9VTgtHA6T2HvbBbAJJU'; // MySQL password
+$database = 'bukd4iomk13wlvwir9ps'; // MySQL database name
+
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
